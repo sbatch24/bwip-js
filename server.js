@@ -6,10 +6,6 @@
 //
 var http     = require('http');
 var bwipjs   = require('./node-bwipjs');	// ./ required for local use
-var fs       = require('fs');
-var path     = require('path');
-var hostname = '127.0.0.1';
-var port     = 3030;
 
 // Example of how to load a font into bwipjs. 
 //  bwipjs.loadFont(fontname, sizemult, fontdata)
@@ -17,8 +13,8 @@ var port     = 3030;
 // To unload a font (and free up space for another):
 //  bwipjs.unloadFont(fontname)
 //
-//bwipjs.loadFont('Inconsolata', 108,
-//		fs.readFileSync(path.resolve(__dirname, 'fonts/Inconsolata.otf'), 'binary'));
+bwipjs.loadFont('Inconsolata', 108,
+  require('fs').readFileSync('fonts/Inconsolata.otf', 'binary'));
 
 http.createServer(function(req, res) {
 	// If the url does not begin /?bcid= then 404.  Otherwise, we end up
@@ -31,6 +27,6 @@ http.createServer(function(req, res) {
 		bwipjs(req, res, { sizelimit:1024*1024 });
 	}
 
-}).listen(port, hostname, function() {
-	console.log('BWIP-JS listening on http://%s:%s/', hostname, port);
-});
+}).listen(3030);
+
+console.log('listening on 3030');
